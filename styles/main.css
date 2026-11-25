@@ -419,6 +419,9 @@ button {
   line-height: 1.25;
   letter-spacing: -0.015em;
   margin-bottom: var(--space-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .card-desc {
