@@ -144,14 +144,26 @@ function renderProjects(projects) {
 }
 
 function initTagMarquee() {
+  const isMobile = window.matchMedia("(max-width: 640px)").matches;
   document.querySelectorAll(".section:not(#stack) .tag-list").forEach((list) => {
     if (list.querySelector(".tag-track")) return;
     const items = Array.from(list.children);
     if (!items.length) return;
+
+    // Only marquee on mobile when tags actually wrap to a second row
+    const firstHeight = items[0].getBoundingClientRect().height;
+    const wraps = isMobile && list.getBoundingClientRect().height > firstHeight + 8;
+    if (!wraps) return;
+
+    list.classList.add("is-marquee");
     const track = document.createElement("div");
     track.className = "tag-track";
     items.forEach((el) => track.appendChild(el));
-    items.forEach((el) => track.appendChild(el.cloneNode(true)));
+    items.forEach((el) => {
+      const clone = el.cloneNode(true);
+      clone.classList.add("tag-clone");
+      track.appendChild(clone);
+    });
     list.appendChild(track);
   });
 }
