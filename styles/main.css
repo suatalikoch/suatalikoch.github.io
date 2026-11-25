@@ -360,6 +360,29 @@ button {
     flex: 0 0 85%;
     scroll-snap-align: start;
   }
+
+  .section:not(#stack) .tag-list {
+    flex-wrap: nowrap;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  }
+
+  .section:not(#stack) .tag-track {
+    display: flex;
+    gap: var(--space-2);
+    width: max-content;
+    animation: tagMarquee 14s linear infinite;
+  }
+}
+
+@keyframes tagMarquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 .card-top {

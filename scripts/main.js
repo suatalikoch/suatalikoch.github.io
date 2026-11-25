@@ -140,7 +140,23 @@ function renderProjects(projects) {
     btn.addEventListener("click", () => openCaseStudy(idx));
     grid.appendChild(btn);
   });
+  initTagMarquee();
 }
+
+function initTagMarquee() {
+  document.querySelectorAll(".section:not(#stack) .tag-list").forEach((list) => {
+    if (list.querySelector(".tag-track")) return;
+    const items = Array.from(list.children);
+    if (!items.length) return;
+    const track = document.createElement("div");
+    track.className = "tag-track";
+    items.forEach((el) => track.appendChild(el));
+    items.forEach((el) => track.appendChild(el.cloneNode(true)));
+    list.appendChild(track);
+  });
+}
+
+initTagMarquee();
 
 async function loadProjects() {
   try {
