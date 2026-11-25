@@ -1,53 +1,4 @@
-const PROJECTS = [
-  {
-    meta: "TYPESCRIPT / NEXT.JS",
-    title: "studies",
-    problem: "Students need a single place to track deadlines, manage notes, and monitor study progress.",
-    arch: "Built with Next.js and Supabase for real-time data sync and secure authentication.",
-    outcome: "Full-stack student hub with deadline tracking, note management, and progress monitoring.",
-    url: "https://github.com/suatalikoch/studies"
-  },
-  {
-    meta: "JAVASCRIPT / VANILLA",
-    title: "client-server",
-    problem: "Understanding authentication and request handling without relying on heavy web frameworks.",
-    arch: "Custom client-server architecture for user registration and authentication in plain JavaScript.",
-    outcome: "Clean, framework-free reference implementation of auth flows.",
-    url: "https://github.com/suatalikoch/client-server"
-  },
-  {
-    meta: "PYTHON / PYQT6",
-    title: "VSCodeClone",
-    problem: "Building a desktop code editor with modern syntax highlighting and familiar ergonomics.",
-    arch: "Python desktop shell powered by PyQt6 embedding the Monaco Editor.",
-    outcome: "Lightweight, VS Code-inspired desktop editor.",
-    url: "https://github.com/suatalikoch/VSCodeClone"
-  },
-  {
-    meta: "C# / .NET",
-    title: "RentACar",
-    problem: "Managing vehicle inventory, bookings, and customer records for a rental workflow.",
-    arch: "Structured C# application built as an IT Career project.",
-    outcome: "Complete rental management system.",
-    url: "https://github.com/suatalikoch/RentACar"
-  },
-  {
-    meta: "C# / .NET",
-    title: "SportShop",
-    problem: "Storefront and inventory management for sporting goods.",
-    arch: "C# application with structured data models and catalog management.",
-    outcome: "Clean e-commerce and inventory workflow.",
-    url: "https://github.com/suatalikoch/SportShop"
-  },
-  {
-    meta: "C# / .NET",
-    title: "BarRenting",
-    problem: "Scheduling and managing bar equipment and venue rentals.",
-    arch: "C# application handling rental bookings and availability.",
-    outcome: "Reliable booking and inventory tracking.",
-    url: "https://github.com/suatalikoch/BarRenting"
-  }
-];
+let PROJECTS = [];
 
 const root = document.documentElement;
 const themeToggle = document.getElementById("theme-toggle");
@@ -89,11 +40,13 @@ const caseClose = document.getElementById("case-close");
 export function openCaseStudy(index) {
   const p = PROJECTS[index];
   if (!p) return;
-  document.getElementById("case-meta").textContent = p.meta;
-  document.getElementById("case-title").textContent = p.title;
-  document.getElementById("case-problem").textContent = p.problem;
-  document.getElementById("case-arch").textContent = p.arch;
-  document.getElementById("case-outcome").textContent = p.outcome;
+  document.getElementById("case-meta").textContent = (p.language || "CODE").toUpperCase();
+  document.getElementById("case-title").textContent = p.name;
+  document.getElementById("case-problem").textContent = p.description || "Pinned GitHub repository.";
+  document.getElementById("case-arch").textContent = `Primary language: ${p.language || "Code"}`;
+  document.getElementById("case-outcome").innerHTML = p.url
+    ? `<a href="${p.url}" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">View repository on GitHub →</a>`
+    : "";
   caseModal.setAttribute("data-open", "true");
 }
 
@@ -101,9 +54,43 @@ export function closeCaseStudy() {
   caseModal.setAttribute("data-open", "false");
 }
 
-document.querySelectorAll("[data-project]").forEach((card) => {
-  card.addEventListener("click", () => openCaseStudy(Number(card.dataset.project)));
-});
+function renderProjects(projects) {
+  const grid = document.getElementById("project-grid");
+  if (!grid || !projects.length) return;
+  grid.innerHTML = "";
+  projects.forEach((p, idx) => {
+    const btn = document.createElement("button");
+    btn.className = "card card-interactive";
+    btn.type = "button";
+    btn.dataset.project = String(idx);
+    btn.innerHTML = `
+      <div class="card-top">
+        <div class="card-meta">${(p.language || "CODE").toUpperCase()}</div>
+        <h3 class="card-title">${p.name}</h3>
+        <p class="card-desc">${p.description || "Pinned repository on GitHub."}</p>
+      </div>
+      <div class="tag-list">
+        <span class="tag">${p.language || "Code"}</span>
+        <span class="tag">GitHub</span>
+      </div>
+    `;
+    btn.addEventListener("click", () => openCaseStudy(idx));
+    grid.appendChild(btn);
+  });
+}
+
+async function loadProjects() {
+  try {
+    const res = await fetch("./projects.json", { cache: "no-cache" });
+    if (!res.ok) return;
+    PROJECTS = await res.json();
+    renderProjects(PROJECTS);
+  } catch {
+    // Keep static fallback cards if offline
+  }
+}
+
+loadProjects();
 
 caseClose.addEventListener("click", closeCaseStudy);
 caseModal.addEventListener("click", (e) => {

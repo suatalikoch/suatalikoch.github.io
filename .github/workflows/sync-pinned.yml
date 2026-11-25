@@ -1,0 +1,57 @@
+name: Sync Pinned Repositories
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch pinned repositories
+        run: |
+          python3 - <<'EOF'
+          import json, re, urllib.request, html
+
+          url = "https://github.com/suatalikoch"
+          req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+          page = urllib.request.urlopen(req).read().decode("utf-8")
+
+          items = re.findall(r'<li[^>]*class="[^"]*pinned-item-list-item[^"]*"[^>]*>([\s\S]*?)</li>', page)
+          projects = []
+          for item in items:
+            repo_m = re.search(r'href="/suatalikoch/([^"]+)"', item)
+            desc_m = re.search(r'class="pinned-item-desc[^"]*">([\s\S]*?)</p>', item)
+            lang_m = re.search(r'itemprop="programmingLanguage">([^<]+)</span>', item)
+            if not repo_m:
+              continue
+            name = repo_m.group(1).strip()
+            desc = re.sub(r'<[^>]+>', '', desc_m.group(1)).strip() if desc_m else ""
+            desc = html.unescape(desc)
+            lang = lang_m.group(1).strip() if lang_m else "Code"
+            projects.append({
+              "name": name,
+              "language": lang,
+              "description": desc,
+              "url": f"https://github.com/suatalikoch/{name}"
+            })
+
+          if projects:
+            with open("projects.json", "w", encoding="utf-8") as f:
+              json.dump(projects, f, indent=2, ensure_ascii=False)
+              f.write("\n")
+          EOF
+
+      - name: Commit updated projects.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add projects.json
+          git diff --staged --quiet || git commit -m "Sync pinned repositories"
+          git push

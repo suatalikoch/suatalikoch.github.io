@@ -1,0 +1,38 @@
+[
+  {
+    "name": "studies",
+    "language": "TypeScript",
+    "description": "Student Hub is a Next.js and Supabase-powered web app that helps students organize their studies. It features deadline tracking, note management, progress monitoring, and secure authentication.",
+    "url": "https://github.com/suatalikoch/studies"
+  },
+  {
+    "name": "client-server",
+    "language": "JavaScript",
+    "description": "A simple web application for user registration and authentication, built without any web frameworks.",
+    "url": "https://github.com/suatalikoch/client-server"
+  },
+  {
+    "name": "VSCodeClone",
+    "language": "Python",
+    "description": "A Visual Studio Code inspired code editor built in Python using PyQt6 and Monaco Editor.",
+    "url": "https://github.com/suatalikoch/VSCodeClone"
+  },
+  {
+    "name": "RentACar",
+    "language": "C#",
+    "description": "IT Career Project",
+    "url": "https://github.com/suatalikoch/RentACar"
+  },
+  {
+    "name": "SportShop",
+    "language": "C#",
+    "description": "Sporting goods storefront and inventory management application.",
+    "url": "https://github.com/suatalikoch/SportShop"
+  },
+  {
+    "name": "BarRenting",
+    "language": "C#",
+    "description": "Bar equipment and venue rental scheduling application.",
+    "url": "https://github.com/suatalikoch/BarRenting"
+  }
+]
