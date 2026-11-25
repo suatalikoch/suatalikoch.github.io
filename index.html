@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Suat Alikoch — Software Engineer</title>
+  <meta name="description" content="Software engineer focused on systems architecture, developer tooling, and high-precision interfaces." />
+  <link rel="stylesheet" href="./styles/tokens.css" />
+  <link rel="stylesheet" href="./styles/main.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a href="#" class="brand">suatalikoch</a>
+      <div class="topbar-actions">
+        <button id="theme-toggle" class="pill-btn" type="button" aria-label="Toggle color theme">
+          <span id="theme-label">Dark</span>
+        </button>
+        <button id="cmd-trigger" class="pill-btn" type="button" aria-label="Open command palette">
+          <span>Command</span>
+          <span class="kbd">⌘K</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section" id="intro">
+      <div class="container">
+        <h1 class="hero-title">Software engineer building fast, reliable web tools.</h1>
+        <p class="hero-subtitle">
+          I design and build web applications, developer tools, and clean interfaces. I care about speed, simplicity, and code that lasts.
+        </p>
+        <div class="hero-actions">
+          <a href="#work" class="btn-primary">Selected Work</a>
+          <a href="https://github.com/suatalikoch" target="_blank" rel="noopener noreferrer" class="btn-secondary">GitHub</a>
+          <button id="copy-email" class="btn-secondary" type="button">Copy Email</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="work">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Selected Work</h2>
+          <span class="section-meta">01 — 04</span>
+        </div>
+        <div class="grid-2" id="project-grid">
+          <button class="card card-interactive" type="button" data-project="0">
+            <div class="card-top">
+              <div class="card-meta">2026 / WEB</div>
+              <h3 class="card-title">Browser State Sync</h3>
+              <p class="card-desc">A lightweight state sync layer that keeps complex web apps responsive without blocking the main thread.</p>
+            </div>
+            <div class="tag-list">
+              <span class="tag">TypeScript</span>
+              <span class="tag">WebWorkers</span>
+            </div>
+          </button>
+
+          <button class="card card-interactive" type="button" data-project="1">
+            <div class="card-top">
+              <div class="card-meta">2026 / CLI</div>
+              <h3 class="card-title">Build Time Profiler</h3>
+              <p class="card-desc">A command-line tool that reads build logs and shows where time is actually being spent.</p>
+            </div>
+            <div class="tag-list">
+              <span class="tag">Rust</span>
+              <span class="tag">CLI</span>
+            </div>
+          </button>
+
+          <button class="card card-interactive" type="button" data-project="2">
+            <div class="card-top">
+              <div class="card-meta">2025 / UI</div>
+              <h3 class="card-title">Fast Data Table</h3>
+              <p class="card-desc">A virtualized table built for large datasets with full keyboard navigation.</p>
+            </div>
+            <div class="tag-list">
+              <span class="tag">JavaScript</span>
+              <span class="tag">A11y</span>
+            </div>
+          </button>
+
+          <button class="card card-interactive" type="button" data-project="3">
+            <div class="card-top">
+              <div class="card-meta">2025 / BACKEND</div>
+              <h3 class="card-title">Edge Cache Proxy</h3>
+              <p class="card-desc">A small HTTP proxy that serves cached responses while refreshing stale data in the background.</p>
+            </div>
+            <div class="tag-list">
+              <span class="tag">Go</span>
+              <span class="tag">HTTP</span>
+            </div>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="principles">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Engineering Principles</h2>
+          <span class="section-meta">STANDARDS</span>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-top">
+              <div class="card-meta">01</div>
+              <h3 class="card-title">Mathematical Consistency</h3>
+              <p class="card-desc">Every spacing unit, border radius, and typographic step is governed by a strict token system.</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-top">
+              <div class="card-meta">02</div>
+              <h3 class="card-title">Zero Unnecessary Dependencies</h3>
+              <p class="card-desc">Prefer native platform primitives over heavy abstractions that degrade load time and maintainability.</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-top">
+              <div class="card-meta">03</div>
+              <h3 class="card-title">Keyboard-First UX</h3>
+              <p class="card-desc">Every primary workflow is reachable without leaving the keyboard, backed by predictable focus states.</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-top">
+              <div class="card-meta">04</div>
+              <h3 class="card-title">100/100 Performance</h3>
+              <p class="card-desc">Zero layout shift, sub-second first paint, and full respect for reduced-motion preferences.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span>© 2026 Suat Alikoch</span>
+      <div class="footer-links">
+        <a href="https://github.com/suatalikoch" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="#work">Work</a>
+        <a href="#principles">Principles</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Command Palette Modal -->
+  <div id="cmd-modal" class="modal-backdrop" data-open="false" role="dialog" aria-modal="true" aria-label="Command Palette">
+    <div class="modal-panel">
+      <div class="cmd-input-wrap">
+        <input id="cmd-input" class="cmd-input" type="text" placeholder="Type a command or search..." autocomplete="off" />
+      </div>
+      <ul id="cmd-list" class="cmd-list" role="listbox"></ul>
+    </div>
+  </div>
+
+  <!-- Case Study Modal -->
+  <div id="case-modal" class="modal-backdrop" data-open="false" role="dialog" aria-modal="true" aria-labelledby="case-title">
+    <div class="modal-panel">
+      <div class="case-body">
+        <div class="case-header">
+          <div>
+            <div id="case-meta" class="card-meta"></div>
+            <h3 id="case-title" class="card-title"></h3>
+          </div>
+          <button id="case-close" class="pill-btn" type="button">Esc</button>
+        </div>
+        <div class="case-section">
+          <div class="case-section-label">Problem</div>
+          <p id="case-problem" class="card-desc"></p>
+        </div>
+        <div class="case-section">
+          <div class="case-section-label">Architecture</div>
+          <p id="case-arch" class="card-desc"></p>
+        </div>
+        <div class="case-section">
+          <div class="case-section-label">Outcome</div>
+          <p id="case-outcome" class="card-desc"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./scripts/main.js"></script>
+  <script type="module" src="./scripts/command.js"></script>
+</body>
+</html>
