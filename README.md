@@ -1,6 +1,6 @@
 # suatalikoch.github.io
 
-Personal programmer portfolio designed with Apple-inspired industrial precision, strict spacing tokens, and zero AI-slop.
+Personal programmer portfolio designed with ❤️.
 
 ## Documentation & AI Context
 - [`AGENTS.md`](./AGENTS.md) — Persistent rules for any AI model working in this repository.
