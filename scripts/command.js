@@ -3,8 +3,9 @@ import { toggleTheme, copyEmail, openCaseStudy } from "./main.js";
 const COMMANDS = [
   { label: "Jump to Selected Work", hint: "Section", action: () => (location.hash = "#work") },
   { label: "Jump to Engineering Principles", hint: "Section", action: () => (location.hash = "#principles") },
-  { label: "Open Case Study: Browser State Sync", hint: "Project", action: () => openCaseStudy(0) },
-  { label: "Open Case Study: Build Time Profiler", hint: "Project", action: () => openCaseStudy(1) },
+  { label: "Open Project: studies", hint: "GitHub", action: () => openCaseStudy(0) },
+  { label: "Open Project: client-server", hint: "GitHub", action: () => openCaseStudy(1) },
+  { label: "Open Project: VSCodeClone", hint: "GitHub", action: () => openCaseStudy(2) },
   { label: "Toggle Light / Dark Theme", hint: "Theme", action: () => toggleTheme() },
   { label: "Copy Email Address", hint: "Action", action: () => copyEmail() },
   { label: "Open GitHub Profile", hint: "External", action: () => window.open("https://github.com/suatalikoch", "_blank", "noopener") }

@@ -1,31 +1,51 @@
 const PROJECTS = [
   {
-    meta: "2026 / WEB",
-    title: "Browser State Sync",
-    problem: "Large state updates on the main thread were causing noticeable UI stutter.",
-    arch: "Moved state diffing into a WebWorker and sent only small patches back to the page.",
-    outcome: "Cut main-thread work by 84% with no extra libraries."
+    meta: "TYPESCRIPT / NEXT.JS",
+    title: "studies",
+    problem: "Students need a single place to track deadlines, manage notes, and monitor study progress.",
+    arch: "Built with Next.js and Supabase for real-time data sync and secure authentication.",
+    outcome: "Full-stack student hub with deadline tracking, note management, and progress monitoring.",
+    url: "https://github.com/suatalikoch/studies"
   },
   {
-    meta: "2026 / CLI",
-    title: "Build Time Profiler",
-    problem: "It was hard to see which step in a monorepo build was slowing down CI.",
-    arch: "Wrote a small Rust CLI that reads compiler trace files and prints a breakdown in the terminal.",
-    outcome: "Found and removed redundant build steps, cutting total CI time by 42%."
+    meta: "JAVASCRIPT / VANILLA",
+    title: "client-server",
+    problem: "Understanding authentication and request handling without relying on heavy web frameworks.",
+    arch: "Custom client-server architecture for user registration and authentication in plain JavaScript.",
+    outcome: "Clean, framework-free reference implementation of auth flows.",
+    url: "https://github.com/suatalikoch/client-server"
   },
   {
-    meta: "2025 / UI",
-    title: "Fast Data Table",
-    problem: "Standard HTML tables froze when rendering and filtering 100,000+ rows.",
-    arch: "Built a virtualized table that only renders visible rows and supports full keyboard navigation.",
-    outcome: "Smooth 60fps scrolling and instant keyboard navigation across 150k rows."
+    meta: "PYTHON / PYQT6",
+    title: "VSCodeClone",
+    problem: "Building a desktop code editor with modern syntax highlighting and familiar ergonomics.",
+    arch: "Python desktop shell powered by PyQt6 embedding the Monaco Editor.",
+    outcome: "Lightweight, VS Code-inspired desktop editor.",
+    url: "https://github.com/suatalikoch/VSCodeClone"
   },
   {
-    meta: "2025 / BACKEND",
-    title: "Edge Cache Proxy",
-    problem: "Origin servers spiked in latency whenever caches expired at the same time.",
-    arch: "Built a Go HTTP proxy that serves stale responses while refreshing the cache in the background.",
-    outcome: "Lowered p99 response time from 310ms to 18ms under heavy load."
+    meta: "C# / .NET",
+    title: "RentACar",
+    problem: "Managing vehicle inventory, bookings, and customer records for a rental workflow.",
+    arch: "Structured C# application built as an IT Career project.",
+    outcome: "Complete rental management system.",
+    url: "https://github.com/suatalikoch/RentACar"
+  },
+  {
+    meta: "C# / .NET",
+    title: "SportShop",
+    problem: "Storefront and inventory management for sporting goods.",
+    arch: "C# application with structured data models and catalog management.",
+    outcome: "Clean e-commerce and inventory workflow.",
+    url: "https://github.com/suatalikoch/SportShop"
+  },
+  {
+    meta: "C# / .NET",
+    title: "BarRenting",
+    problem: "Scheduling and managing bar equipment and venue rentals.",
+    arch: "C# application handling rental bookings and availability.",
+    outcome: "Reliable booking and inventory tracking.",
+    url: "https://github.com/suatalikoch/BarRenting"
   }
 ];
 
@@ -53,7 +73,7 @@ themeToggle.addEventListener("click", toggleTheme);
 // Copy Email
 const copyBtn = document.getElementById("copy-email");
 export function copyEmail() {
-  navigator.clipboard?.writeText("hello@suatalikoch.com");
+  navigator.clipboard?.writeText("suat.alikoch@gmail.com");
   const original = copyBtn.textContent;
   copyBtn.textContent = "Copied";
   setTimeout(() => {
