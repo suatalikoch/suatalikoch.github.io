@@ -141,6 +141,7 @@ function renderProjects(projects) {
     grid.appendChild(btn);
   });
   requestAnimationFrame(() => initTagMarquee());
+window.addEventListener("resize", () => requestAnimationFrame(initTagMarquee));
 }
 
 function initTagMarquee() {
@@ -167,6 +168,7 @@ function initTagMarquee() {
 }
 
 requestAnimationFrame(() => initTagMarquee());
+window.addEventListener("resize", () => requestAnimationFrame(initTagMarquee));
 
 async function loadProjects() {
   try {
