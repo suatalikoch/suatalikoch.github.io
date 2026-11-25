@@ -163,3 +163,21 @@ caseModal.addEventListener("click", (e) => {
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") closeCaseStudy();
 });
+
+// Subtle scroll reveal
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  },
+  { threshold: 0.08 }
+);
+
+document.querySelectorAll(".section").forEach((el) => {
+  el.classList.add("reveal");
+  observer.observe(el);
+});

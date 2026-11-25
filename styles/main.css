@@ -254,7 +254,80 @@ button {
 
 .card-interactive:hover {
   background-color: var(--bg-tertiary);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+}
+
+.card-interactive:active,
+.btn-primary:active,
+.btn-secondary:active,
+.pill-btn:active {
+  transform: scale(0.985);
+}
+
+/* Subtle Apple-style scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 350ms var(--ease-apple), transform 350ms var(--ease-apple);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Modal entrance */
+.modal-backdrop[data-open="true"] .modal-panel {
+  animation: modalIn 200ms var(--ease-apple) forwards;
+}
+
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Mobile refinements */
+@media (max-width: 640px) {
+  .container {
+    padding-inline: var(--space-4);
+  }
+
+  .section {
+    padding-block: var(--space-12);
+  }
+
+  .section-header {
+    margin-bottom: var(--space-6);
+  }
+
+  .hero-actions {
+    flex-direction: column;
+  }
+
+  .hero-actions .btn-primary,
+  .hero-actions .btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .modal-backdrop {
+    padding-top: 6vh;
+    padding-inline: var(--space-3);
+  }
+
+  .case-body {
+    padding: var(--space-4);
+  }
+
+  .case-readme {
+    max-height: 65vh;
+  }
 }
 
 .card-top {
