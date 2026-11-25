@@ -37,17 +37,26 @@ copyBtn.addEventListener("click", copyEmail);
 const caseModal = document.getElementById("case-modal");
 const caseClose = document.getElementById("case-close");
 
-export function openCaseStudy(index) {
+export async function openCaseStudy(index) {
   const p = PROJECTS[index];
   if (!p) return;
+  const readmeEl = document.getElementById("case-readme");
   document.getElementById("case-meta").textContent = (p.language || "CODE").toUpperCase();
   document.getElementById("case-title").textContent = p.name;
-  document.getElementById("case-problem").textContent = p.description || "Pinned GitHub repository.";
-  document.getElementById("case-arch").textContent = `Primary language: ${p.language || "Code"}`;
+  readmeEl.textContent = "Loading README.md...";
   document.getElementById("case-outcome").innerHTML = p.url
     ? `<a href="${p.url}" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">View repository on GitHub →</a>`
     : "";
   caseModal.setAttribute("data-open", "true");
+
+  try {
+    const res = await fetch(`https://raw.githubusercontent.com/suatalikoch/${encodeURIComponent(p.name)}/HEAD/README.md`);
+    if (!res.ok) throw new Error("Not found");
+    const text = await res.text();
+    readmeEl.textContent = text.trim() || p.description || "No README.md found.";
+  } catch {
+    readmeEl.textContent = p.description || "No README.md available for this repository.";
+  }
 }
 
 export function closeCaseStudy() {

@@ -393,6 +393,23 @@ button {
   margin-bottom: var(--space-1);
 }
 
+.case-readme {
+  max-height: 55vh;
+  overflow-y: auto;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  white-space: pre-wrap;
+  word-break: break-word;
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--border-hairline);
+}
+
+.case-footer {
+  padding-top: var(--space-4);
+  font-size: 0.875rem;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
