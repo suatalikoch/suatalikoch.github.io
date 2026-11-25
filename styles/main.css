@@ -255,6 +255,8 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  min-width: 0;
+  overflow: hidden;
   padding: var(--space-6);
   border-radius: var(--radius-lg);
   background-color: var(--bg-secondary);
