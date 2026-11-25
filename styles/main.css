@@ -328,6 +328,20 @@ button {
   .case-readme {
     max-height: 65vh;
   }
+
+  .grid-2 {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: var(--space-4);
+    padding-bottom: var(--space-2);
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .grid-2 > .card {
+    flex: 0 0 85%;
+    scroll-snap-align: start;
+  }
 }
 
 .card-top {
