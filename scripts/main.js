@@ -37,12 +37,18 @@ copyBtn.addEventListener("click", copyEmail);
 const caseModal = document.getElementById("case-modal");
 const caseClose = document.getElementById("case-close");
 
-function renderMarkdown(md) {
+function renderMarkdown(md, repoName) {
   const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  const resolveUrl = (url) => {
+    if (/^https?:\/\//i.test(url)) return url;
+    const clean = url.replace(/^\.?\//, "");
+    return `https://raw.githubusercontent.com/suatalikoch/${encodeURIComponent(repoName)}/HEAD/${clean}`;
+  };
   const inline = (s) =>
     esc(s)
       .replace(/`([^`]+)`/g, "<code>$1</code>")
       .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+      .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_, alt, url) => `<img src="${resolveUrl(url)}" alt="${alt}" loading="lazy" />`)
       .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
 
   const lines = md.replace(/\r\n/g, "\n").split("\n");
@@ -101,7 +107,7 @@ export async function openCaseStudy(index) {
     const res = await fetch(`https://raw.githubusercontent.com/suatalikoch/${encodeURIComponent(p.name)}/HEAD/README.md`);
     if (!res.ok) throw new Error("Not found");
     const text = await res.text();
-    readmeEl.innerHTML = text.trim() ? renderMarkdown(text.trim()) : `<p>${p.description || "No README.md found."}</p>`;
+    readmeEl.innerHTML = text.trim() ? renderMarkdown(text.trim(), p.name) : `<p>${p.description || "No README.md found."}</p>`;
   } catch {
     readmeEl.innerHTML = `<p>${p.description || "No README.md available for this repository."}</p>`;
   }
