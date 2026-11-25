@@ -144,14 +144,13 @@ function renderProjects(projects) {
 }
 
 function initTagMarquee() {
-  const isMobile = window.matchMedia("(max-width: 640px)").matches;
-  document.querySelectorAll(".section:not(#stack) .tag-list").forEach((list) => {
+  document.querySelectorAll(".tag-list").forEach((list) => {
     if (list.querySelector(".tag-track")) return;
     const items = Array.from(list.children);
     if (!items.length) return;
 
-    // Only marquee on mobile when tags actually wrap to a second row
-    const wraps = isMobile && items[items.length - 1].offsetTop > items[0].offsetTop + 4;
+    // Marquee whenever tags wrap to a second row
+    const wraps = items[items.length - 1].offsetTop > items[0].offsetTop + 4;
     if (!wraps) return;
 
     list.classList.add("is-marquee");
