@@ -235,6 +235,22 @@ button {
   }
 }
 
+.grid-3 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+
+@media (min-width: 900px) {
+  .grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.card-stack {
+  justify-content: flex-start;
+}
+
 .card {
   display: flex;
   flex-direction: column;
@@ -329,7 +345,8 @@ button {
     max-height: 65vh;
   }
 
-  .grid-2 {
+  .grid-2,
+  .grid-3 {
     display: flex;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
@@ -338,7 +355,8 @@ button {
     -webkit-overflow-scrolling: touch;
   }
 
-  .grid-2 > .card {
+  .grid-2 > .card,
+  .grid-3 > .card {
     flex: 0 0 85%;
     scroll-snap-align: start;
   }
