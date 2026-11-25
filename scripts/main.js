@@ -37,6 +37,54 @@ copyBtn.addEventListener("click", copyEmail);
 const caseModal = document.getElementById("case-modal");
 const caseClose = document.getElementById("case-close");
 
+function renderMarkdown(md) {
+  const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  const inline = (s) =>
+    esc(s)
+      .replace(/`([^`]+)`/g, "<code>$1</code>")
+      .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+
+  const lines = md.replace(/\r\n/g, "\n").split("\n");
+  let html = "";
+  let inCode = false;
+  let inList = false;
+
+  for (const line of lines) {
+    if (line.trim().startsWith("```")) {
+      if (inList) { html += "</ul>"; inList = false; }
+      html += inCode ? "</code></pre>" : "<pre><code>";
+      inCode = !inCode;
+      continue;
+    }
+    if (inCode) {
+      html += esc(line) + "\n";
+      continue;
+    }
+    if (/^###\s+/.test(line)) {
+      if (inList) { html += "</ul>"; inList = false; }
+      html += `<h3>${inline(line.replace(/^###\s+/, ""))}</h3>`;
+    } else if (/^##\s+/.test(line)) {
+      if (inList) { html += "</ul>"; inList = false; }
+      html += `<h2>${inline(line.replace(/^##\s+/, ""))}</h2>`;
+    } else if (/^#\s+/.test(line)) {
+      if (inList) { html += "</ul>"; inList = false; }
+      html += `<h1>${inline(line.replace(/^#\s+/, ""))}</h1>`;
+    } else if (/^[-*]\s+/.test(line.trim())) {
+      if (!inList) { html += "<ul>"; inList = true; }
+      html += `<li>${inline(line.trim().replace(/^[-*]\s+/, ""))}</li>`;
+    } else if (line.trim() === "") {
+      if (inList) { html += "</ul>"; inList = false; }
+    } else {
+      if (inList) { html += "</ul>"; inList = false; }
+      html += `<p>${inline(line)}</p>`;
+    }
+  }
+  if (inList) html += "</ul>";
+  if (inCode) html += "</code></pre>";
+  return html;
+}
+
 export async function openCaseStudy(index) {
   const p = PROJECTS[index];
   if (!p) return;
@@ -53,9 +101,9 @@ export async function openCaseStudy(index) {
     const res = await fetch(`https://raw.githubusercontent.com/suatalikoch/${encodeURIComponent(p.name)}/HEAD/README.md`);
     if (!res.ok) throw new Error("Not found");
     const text = await res.text();
-    readmeEl.textContent = text.trim() || p.description || "No README.md found.";
+    readmeEl.innerHTML = text.trim() ? renderMarkdown(text.trim()) : `<p>${p.description || "No README.md found."}</p>`;
   } catch {
-    readmeEl.textContent = p.description || "No README.md available for this repository.";
+    readmeEl.innerHTML = `<p>${p.description || "No README.md available for this repository."}</p>`;
   }
 }
 
