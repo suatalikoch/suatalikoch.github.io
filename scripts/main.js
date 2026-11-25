@@ -140,7 +140,7 @@ function renderProjects(projects) {
     btn.addEventListener("click", () => openCaseStudy(idx));
     grid.appendChild(btn);
   });
-  initTagMarquee();
+  requestAnimationFrame(() => initTagMarquee());
 }
 
 function initTagMarquee() {
@@ -151,8 +151,7 @@ function initTagMarquee() {
     if (!items.length) return;
 
     // Only marquee on mobile when tags actually wrap to a second row
-    const firstHeight = items[0].getBoundingClientRect().height;
-    const wraps = isMobile && list.getBoundingClientRect().height > firstHeight + 8;
+    const wraps = isMobile && items[items.length - 1].offsetTop > items[0].offsetTop + 4;
     if (!wraps) return;
 
     list.classList.add("is-marquee");
@@ -168,7 +167,7 @@ function initTagMarquee() {
   });
 }
 
-initTagMarquee();
+requestAnimationFrame(() => initTagMarquee());
 
 async function loadProjects() {
   try {
