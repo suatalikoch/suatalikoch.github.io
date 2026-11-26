@@ -107,6 +107,9 @@ function renderMarkdown(md, repoName, owner = "suatalikoch") {
     } else if (/^[-*]\s+/.test(line.trim())) {
       if (!inList) { html += "<ul>"; inList = true; }
       html += `<li>${inline(line.trim().replace(/^[-*]\s+/, ""))}</li>`;
+    } else if (/^---+$/.test(line.trim())) {
+      if (inList) { html += "</ul>"; inList = false; }
+      html += "<hr />";
     } else if (line.trim() === "") {
       if (inList) { html += "</ul>"; inList = false; }
     } else {
