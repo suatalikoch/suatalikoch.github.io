@@ -383,6 +383,10 @@ button {
   animation: tagMarquee 14s linear infinite;
 }
 
+.tag-list.is-marquee:hover .tag-track {
+  animation-play-state: paused;
+}
+
 .tag-track {
   display: flex;
   flex-wrap: wrap;

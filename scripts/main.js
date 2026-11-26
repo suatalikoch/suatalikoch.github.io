@@ -164,6 +164,8 @@ function initTagMarquee() {
       track.appendChild(clone);
     });
     list.appendChild(track);
+    const distance = track.scrollWidth / 2;
+    track.style.animationDuration = `${Math.max(distance / 40, 4).toFixed(2)}s`;
   });
 }
 
