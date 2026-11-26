@@ -79,7 +79,7 @@ function renderMarkdown(md, repoName, owner = "suatalikoch") {
     if (/^\|.+\|$/.test(line.trim())) {
       if (inList) { html += "</ul>"; inList = false; }
       const next = lines[i + 1]?.trim() || "";
-      if (!inTable && /^\|[\s:-]+\|$/.test(next.replace(/\|/g, "|"))) {
+      if (!inTable && /^\|[\s|:-]+\|$/.test(next)) {
         const headers = parseRow(line);
         html += `<table><thead><tr>${headers.map((h) => `<th>${inline(h)}</th>`).join("")}</tr></thead><tbody>`;
         inTable = true;
