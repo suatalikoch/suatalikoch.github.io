@@ -40,6 +40,9 @@ copyBtn.addEventListener("click", copyEmail);
 const caseModal = document.getElementById("case-modal");
 const caseClose = document.getElementById("case-close");
 
+const COPY_ICON = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`;
+const CHECK_ICON = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
+
 function highlightCode(raw) {
   const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   return esc(raw).replace(
@@ -83,7 +86,7 @@ function renderMarkdown(md, repoName, owner = "suatalikoch") {
       if (inList) { html += "</ul>"; inList = false; }
       if (inTable) { html += "</tbody></table>"; inTable = false; }
       if (inCode) {
-        html += `<div class="code-block"><button class="code-copy" type="button">Copy</button><pre><code>${highlightCode(codeBuf.trimEnd())}</code></pre></div>`;
+        html += `<div class="code-block"><button class="code-copy" type="button" aria-label="Copy code">${COPY_ICON}</button><pre><code>${highlightCode(codeBuf.trimEnd())}</code></pre></div>`;
         codeBuf = "";
         inCode = false;
       } else {
@@ -164,8 +167,8 @@ export async function openCaseStudy(index) {
       btn.addEventListener("click", () => {
         const code = btn.nextElementSibling?.textContent || "";
         navigator.clipboard?.writeText(code);
-        btn.textContent = "Copied";
-        setTimeout(() => { btn.textContent = "Copy"; }, 1500);
+        btn.innerHTML = CHECK_ICON;
+        setTimeout(() => { btn.innerHTML = COPY_ICON; }, 1500);
       });
     });
   } catch {

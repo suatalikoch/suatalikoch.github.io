@@ -673,7 +673,6 @@ button {
   border: 1px solid var(--border-hairline);
   border-radius: var(--radius-sm);
   padding: var(--space-3);
-  padding-top: var(--space-8);
   overflow-x: auto;
   margin-bottom: 0;
 }
@@ -687,29 +686,36 @@ button {
   position: absolute;
   top: var(--space-2);
   right: var(--space-2);
-  padding: 2px var(--space-2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
   border-radius: 6px;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
   color: var(--text-secondary);
   background-color: var(--bg-primary);
   border: 1px solid var(--border-hairline);
-  transition: color var(--duration-fast) var(--ease-apple),
+  opacity: 0.75;
+  transition: opacity var(--duration-fast) var(--ease-apple),
+              color var(--duration-fast) var(--ease-apple),
               background-color var(--duration-fast) var(--ease-apple);
 }
 
 .code-copy:hover {
+  opacity: 1;
   color: var(--text-primary);
   background-color: var(--bg-tertiary);
 }
 
-.tok-comment { color: var(--text-tertiary); font-style: italic; }
-.tok-string { color: #2e8b57; }
-.tok-keyword { color: var(--accent); font-weight: 500; }
-.tok-number { color: #d97706; }
+.tok-comment { color: #707f8c; font-style: italic; }
+.tok-string { color: #d12f1b; }
+.tok-keyword { color: #ad3da4; font-weight: 500; }
+.tok-number { color: #272ad8; }
 
-[data-theme="dark"] .tok-string { color: #6ee7b7; }
-[data-theme="dark"] .tok-number { color: #fbbf24; }
+[data-theme="dark"] .tok-comment { color: #7f8c98; }
+[data-theme="dark"] .tok-string { color: #ff8170; }
+[data-theme="dark"] .tok-keyword { color: #ff7ab2; }
+[data-theme="dark"] .tok-number { color: #d9c97c; }
 
 .case-readme pre code {
   background: none;
