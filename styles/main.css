@@ -673,9 +673,43 @@ button {
   border: 1px solid var(--border-hairline);
   border-radius: var(--radius-sm);
   padding: var(--space-3);
+  padding-top: var(--space-8);
   overflow-x: auto;
+  margin-bottom: 0;
+}
+
+.code-block {
+  position: relative;
   margin-bottom: var(--space-3);
 }
+
+.code-copy {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  padding: 2px var(--space-2);
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-hairline);
+  transition: color var(--duration-fast) var(--ease-apple),
+              background-color var(--duration-fast) var(--ease-apple);
+}
+
+.code-copy:hover {
+  color: var(--text-primary);
+  background-color: var(--bg-tertiary);
+}
+
+.tok-comment { color: var(--text-tertiary); font-style: italic; }
+.tok-string { color: #2e8b57; }
+.tok-keyword { color: var(--accent); font-weight: 500; }
+.tok-number { color: #d97706; }
+
+[data-theme="dark"] .tok-string { color: #6ee7b7; }
+[data-theme="dark"] .tok-number { color: #fbbf24; }
 
 .case-readme pre code {
   background: none;

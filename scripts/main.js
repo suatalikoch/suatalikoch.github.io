@@ -40,6 +40,19 @@ copyBtn.addEventListener("click", copyEmail);
 const caseModal = document.getElementById("case-modal");
 const caseClose = document.getElementById("case-close");
 
+function highlightCode(raw) {
+  const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  return esc(raw).replace(
+    /(\/\/[^\n]*|#[^\n]*|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|\b(?:const|let|var|function|return|import|from|export|async|await|if|else|for|while|class|def|try|catch|SELECT|FROM|WHERE|CREATE|TABLE|INSERT|INTO|VALUES)\b|\b\d+(?:\.\d+)?\b)/g,
+    (m) => {
+      if (m.startsWith("//") || m.startsWith("#")) return `<span class="tok-comment">${m}</span>`;
+      if (m.startsWith('"') || m.startsWith("'")) return `<span class="tok-string">${m}</span>`;
+      if (/^\d/.test(m)) return `<span class="tok-number">${m}</span>`;
+      return `<span class="tok-keyword">${m}</span>`;
+    }
+  );
+}
+
 function renderMarkdown(md, repoName, owner = "suatalikoch") {
   const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   const resolveUrl = (url) => {
@@ -57,6 +70,7 @@ function renderMarkdown(md, repoName, owner = "suatalikoch") {
   const lines = md.replace(/\r\n/g, "\n").split("\n");
   let html = "";
   let inCode = false;
+  let codeBuf = "";
   let inList = false;
   let inTable = false;
 
@@ -68,12 +82,17 @@ function renderMarkdown(md, repoName, owner = "suatalikoch") {
     if (line.trim().startsWith("```")) {
       if (inList) { html += "</ul>"; inList = false; }
       if (inTable) { html += "</tbody></table>"; inTable = false; }
-      html += inCode ? "</code></pre>" : "<pre><code>";
-      inCode = !inCode;
+      if (inCode) {
+        html += `<div class="code-block"><button class="code-copy" type="button">Copy</button><pre><code>${highlightCode(codeBuf.trimEnd())}</code></pre></div>`;
+        codeBuf = "";
+        inCode = false;
+      } else {
+        inCode = true;
+      }
       continue;
     }
     if (inCode) {
-      html += esc(line) + "\n";
+      codeBuf += line + "\n";
       continue;
     }
     if (/^\|.+\|$/.test(line.trim())) {
@@ -141,6 +160,14 @@ export async function openCaseStudy(index) {
     if (!res.ok) throw new Error("Not found");
     const text = await res.text();
     readmeEl.innerHTML = text.trim() ? renderMarkdown(text.trim(), p.name, owner) : `<p>${p.description || "No README.md found."}</p>`;
+    readmeEl.querySelectorAll(".code-copy").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const code = btn.nextElementSibling?.textContent || "";
+        navigator.clipboard?.writeText(code);
+        btn.textContent = "Copied";
+        setTimeout(() => { btn.textContent = "Copy"; }, 1500);
+      });
+    });
   } catch {
     readmeEl.innerHTML = `<p>${p.description || "No README.md available for this repository."}</p>`;
   }
