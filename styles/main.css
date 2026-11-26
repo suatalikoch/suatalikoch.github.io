@@ -716,6 +716,10 @@ button {
   font-weight: 600;
 }
 
+.case-readme td img {
+  margin-block: 0;
+}
+
 .case-footer {
   padding-top: var(--space-4);
   font-size: 0.875rem;
