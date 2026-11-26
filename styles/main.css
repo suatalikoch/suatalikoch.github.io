@@ -696,6 +696,26 @@ button {
   border: 1px solid var(--border-hairline);
 }
 
+.case-readme table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-block: var(--space-3);
+  font-size: 0.8125rem;
+}
+
+.case-readme th,
+.case-readme td {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border-hairline);
+  text-align: left;
+}
+
+.case-readme th {
+  color: var(--text-primary);
+  background-color: var(--bg-secondary);
+  font-weight: 600;
+}
+
 .case-footer {
   padding-top: var(--space-4);
   font-size: 0.875rem;

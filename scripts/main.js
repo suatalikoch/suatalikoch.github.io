@@ -58,10 +58,16 @@ function renderMarkdown(md, repoName, owner = "suatalikoch") {
   let html = "";
   let inCode = false;
   let inList = false;
+  let inTable = false;
 
-  for (const line of lines) {
+  const parseRow = (row) =>
+    row.trim().replace(/^\|/, "").replace(/\|$/, "").split("|").map((c) => c.trim());
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
     if (line.trim().startsWith("```")) {
       if (inList) { html += "</ul>"; inList = false; }
+      if (inTable) { html += "</tbody></table>"; inTable = false; }
       html += inCode ? "</code></pre>" : "<pre><code>";
       inCode = !inCode;
       continue;
@@ -69,6 +75,25 @@ function renderMarkdown(md, repoName, owner = "suatalikoch") {
     if (inCode) {
       html += esc(line) + "\n";
       continue;
+    }
+    if (/^\|.+\|$/.test(line.trim())) {
+      if (inList) { html += "</ul>"; inList = false; }
+      const next = lines[i + 1]?.trim() || "";
+      if (!inTable && /^\|[\s:-]+\|$/.test(next.replace(/\|/g, "|"))) {
+        const headers = parseRow(line);
+        html += `<table><thead><tr>${headers.map((h) => `<th>${inline(h)}</th>`).join("")}</tr></thead><tbody>`;
+        inTable = true;
+        i++; // skip separator row
+        continue;
+      }
+      if (inTable) {
+        const cells = parseRow(line);
+        html += `<tr>${cells.map((c) => `<td>${inline(c)}</td>`).join("")}</tr>`;
+        continue;
+      }
+    } else if (inTable) {
+      html += "</tbody></table>";
+      inTable = false;
     }
     if (/^###\s+/.test(line)) {
       if (inList) { html += "</ul>"; inList = false; }
@@ -90,6 +115,7 @@ function renderMarkdown(md, repoName, owner = "suatalikoch") {
     }
   }
   if (inList) html += "</ul>";
+  if (inTable) html += "</tbody></table>";
   if (inCode) html += "</code></pre>";
   return html;
 }
