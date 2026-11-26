@@ -378,9 +378,13 @@ button {
 .tag-list.is-marquee .tag-track {
   display: flex;
   flex-wrap: nowrap;
-  gap: var(--space-2);
+  gap: 0;
   width: max-content;
   animation: tagMarquee 14s linear infinite;
+}
+
+.tag-list.is-marquee .tag-track > .tag {
+  margin-right: var(--space-2);
 }
 
 .tag-list.is-marquee:hover .tag-track {
