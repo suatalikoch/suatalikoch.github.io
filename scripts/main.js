@@ -1,3 +1,6 @@
+let PINNED = [];
+let SHOWCASE = [];
+let ACTIVE_TAB = "pinned";
 let PROJECTS = [];
 
 const root = document.documentElement;
@@ -37,12 +40,12 @@ copyBtn.addEventListener("click", copyEmail);
 const caseModal = document.getElementById("case-modal");
 const caseClose = document.getElementById("case-close");
 
-function renderMarkdown(md, repoName) {
+function renderMarkdown(md, repoName, owner = "suatalikoch") {
   const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   const resolveUrl = (url) => {
     if (/^https?:\/\//i.test(url)) return url;
     const clean = url.replace(/^\.?\//, "");
-    return `https://raw.githubusercontent.com/suatalikoch/${encodeURIComponent(repoName)}/HEAD/${clean}`;
+    return `https://raw.githubusercontent.com/${encodeURIComponent(owner)}/${encodeURIComponent(repoName)}/HEAD/${clean}`;
   };
   const inline = (s) =>
     esc(s)
@@ -94,6 +97,7 @@ function renderMarkdown(md, repoName) {
 export async function openCaseStudy(index) {
   const p = PROJECTS[index];
   if (!p) return;
+  const owner = p.owner || "suatalikoch";
   const readmeEl = document.getElementById("case-readme");
   document.getElementById("case-meta").textContent = (p.language || "CODE").toUpperCase();
   document.getElementById("case-title").textContent = p.name;
@@ -104,10 +108,10 @@ export async function openCaseStudy(index) {
   caseModal.setAttribute("data-open", "true");
 
   try {
-    const res = await fetch(`https://raw.githubusercontent.com/suatalikoch/${encodeURIComponent(p.name)}/HEAD/README.md`);
+    const res = await fetch(`https://raw.githubusercontent.com/${encodeURIComponent(owner)}/${encodeURIComponent(p.name)}/HEAD/README.md`);
     if (!res.ok) throw new Error("Not found");
     const text = await res.text();
-    readmeEl.innerHTML = text.trim() ? renderMarkdown(text.trim(), p.name) : `<p>${p.description || "No README.md found."}</p>`;
+    readmeEl.innerHTML = text.trim() ? renderMarkdown(text.trim(), p.name, owner) : `<p>${p.description || "No README.md found."}</p>`;
   } catch {
     readmeEl.innerHTML = `<p>${p.description || "No README.md available for this repository."}</p>`;
   }
@@ -174,14 +178,27 @@ window.addEventListener("resize", () => requestAnimationFrame(initTagMarquee));
 
 async function loadProjects() {
   try {
-    const res = await fetch("./projects.json", { cache: "no-cache" });
-    if (!res.ok) return;
-    PROJECTS = await res.json();
+    const [pinRes, showRes] = await Promise.all([
+      fetch("./projects.json", { cache: "no-cache" }),
+      fetch("./showcase.json", { cache: "no-cache" })
+    ]);
+    if (pinRes.ok) PINNED = await pinRes.json();
+    if (showRes.ok) SHOWCASE = await showRes.json();
+    PROJECTS = ACTIVE_TAB === "showcase" ? SHOWCASE : PINNED;
     renderProjects(PROJECTS);
   } catch {
     // Keep static fallback cards if offline
   }
 }
+
+document.querySelectorAll(".seg-btn").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    ACTIVE_TAB = btn.dataset.tab;
+    document.querySelectorAll(".seg-btn").forEach((b) => b.setAttribute("aria-selected", String(b === btn)));
+    PROJECTS = ACTIVE_TAB === "showcase" ? SHOWCASE : PINNED;
+    renderProjects(PROJECTS);
+  });
+});
 
 loadProjects();
 
