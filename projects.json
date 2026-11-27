@@ -1,5 +1,11 @@
 [
   {
+    "name": "terminal",
+    "language": "TypeScript",
+    "description": "Local-first portfolio tracking and financial analytics terminal built with React, TypeScript, and Express. Includes live/demo account views, risk & dividend analytics, AutoInvest pies, target rebal…",
+    "url": "https://github.com/suatalikoch/terminal"
+  },
+  {
     "name": "studies",
     "language": "TypeScript",
     "description": "Student Hub is a Next.js and Supabase-powered web app that helps students organize their studies. It features deadline tracking, note management, progress monitoring, and secure authentication - al…",
@@ -28,11 +34,5 @@
     "language": "C#",
     "description": "",
     "url": "https://github.com/suatalikoch/SportShop"
-  },
-  {
-    "name": "BarRenting",
-    "language": "C#",
-    "description": "",
-    "url": "https://github.com/suatalikoch/BarRenting"
   }
 ]
