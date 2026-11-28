@@ -24,15 +24,15 @@
     "url": "https://github.com/suatalikoch/VSCodeClone"
   },
   {
+    "name": "transportdigital",
+    "language": "TypeScript",
+    "description": "",
+    "url": "https://github.com/suatalikoch/transportdigital"
+  },
+  {
     "name": "RentACar",
     "language": "C#",
     "description": "IT Career Project",
     "url": "https://github.com/suatalikoch/RentACar"
-  },
-  {
-    "name": "SportShop",
-    "language": "C#",
-    "description": "",
-    "url": "https://github.com/suatalikoch/SportShop"
   }
 ]
